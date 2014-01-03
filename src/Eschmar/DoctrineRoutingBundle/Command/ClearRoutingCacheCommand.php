@@ -20,43 +20,43 @@ class ClearRoutingCacheCommand extends Command
 {
     protected function configure()
     {
-    	$this->setName('cache:clear:routing')
-    		->setDescription('Clear Routing Cache')
-    		->addArgument('env', InputArgument::OPTIONAL, '[dev,prod,test]');
+        $this->setName('cache:clear:routing')
+            ->setDescription('Clear Routing Cache')
+            ->addArgument('env', InputArgument::OPTIONAL, '[dev,prod,test]');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    	$error = false;
-    	$output->writeln('');
+        $error = false;
+        $output->writeln('');
 
-    	$env = $input->getArgument('env') ? $input->getArgument('env') : 'dev';
+        $env = $input->getArgument('env') ? $input->getArgument('env') : 'dev';
 
         // Check if there's available cache files at all
-    	if (!is_dir('app/cache/'.$env)) {
-    		$output->writeln('<info>> No cache folder for environment "'.$env.'" found.</info>');
-    		return;
-    	}
+        if (!is_dir('app/cache/'.$env)) {
+            $output->writeln('<info>> No cache folder for environment "'.$env.'" found.</info>');
+            return;
+        }
 
         // Delete routing cache files
-    	$finder = new Finder();
-    	foreach ($finder->files()->depth('== 0')->in('app/cache/'.$env) as $file) {
-    		if (preg_match('/^appDevUrl/', $file->getFilename()) == 1) {
-    			try {
-    				unlink($file->getRealPath());
-    			} catch (Exception $e) {
-    				$error = true;
-    				$output->writeln('Unable to delete '.$file->getFilename().'!');
-    			}
-    		}
-    	}
+        $finder = new Finder();
+        foreach ($finder->files()->depth('== 0')->in('app/cache/'.$env) as $file) {
+            if (preg_match('/^appDevUrl/', $file->getFilename()) == 1) {
+                try {
+                    unlink($file->getRealPath());
+                } catch (Exception $e) {
+                    $error = true;
+                    $output->writeln('Unable to delete '.$file->getFilename().'!');
+                }
+            }
+        }
 
         // Status report
-    	if ($error) {
-    		$output->writeln('<error>> Unexpected error. Check for write privileges.</error>');
-    	}else {
-    		$output->writeln('<info>> Successfully cleared routing cache.</info>');
-    	}
+        if ($error) {
+            $output->writeln('<error>> Unexpected error. Check for write privileges.</error>');
+        }else {
+            $output->writeln('<info>> Successfully cleared routing cache.</info>');
+        }
     }
 }  // END class ClearRoutingCacheCommand extends Command
 
