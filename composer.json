@@ -6,7 +6,7 @@
     "description": "Dynamic database routing for Symfony2.",
     "homepage": "https://github.com/eschmar/doctrine-routing-bundle",
     "autoload": {
-        "psr-0": { "Eschmar\\Bundle\\DoctrineRoutingBundle": "" }
+        "psr-0": { "Eschmar": "src/" }
     },
     "require": {
         "php": ">=5.3.3",
