@@ -1,0 +1,3 @@
+EschmarDoctrineRoutingBundle:
+    resource: .
+    type: doctrine

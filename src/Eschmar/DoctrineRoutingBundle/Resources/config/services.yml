@@ -1,0 +1,6 @@
+services:
+    eschmar_doctrine_routing.routing_loader:
+        class: "Eschmar\DoctrineRoutingBundle\Service\DoctrineRoutingLoader"
+        arguments: [ @doctrine.orm.entity_manager ]
+        tags:
+            - { name: routing.loader }
