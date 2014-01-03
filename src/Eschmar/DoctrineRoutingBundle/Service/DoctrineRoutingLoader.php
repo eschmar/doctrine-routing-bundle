@@ -48,27 +48,31 @@ class DoctrineRoutingLoader extends Loader
 	 **/
 	public function load($resource, $type = null)
 	{
-		//$routes = new RouteCollection();
-
+		// Avoid multiple adding of the loader
 		if (true === $this->loaded) {
-            throw new \RuntimeException('Do not add this loader twice');
+            throw new \RuntimeException('DoctrineRoutingLoader was already added once!');
         }
 
+       	// Create a new route collection
         $routes = new RouteCollection();
-        $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array('isActive' => 1), array('sort' => 'asc'));
 
+        // Retrieve each active route from the database and add it to the collection
+        $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array('isActive' => 1), array('sort' => 'asc'));
         foreach ($db_routes as $r) {
 
+        	// Pattern
         	$temp = new Route($r->getPath(), array(
         		'_controller' => $r->getDefaultsController()
     		));
 
+        	// Defaults
     		if ($r->getDefaultsFormat() !== null) {
     			$temp->addDefaults(array(
     				'_format' => $r->getDefaultsFormat()
 				));
     		}
 
+    		// Requirements
     		if ($r->getReqFormat() !== null) {
     			$temp->addRequirements(array(
     				'_format' => $r->getReqFormat()
