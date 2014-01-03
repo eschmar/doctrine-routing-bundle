@@ -24,16 +24,51 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="pattern", type="string", length=255)
+     * @ORM\Column(name="name", type="string", length=255)
      */
-    private $pattern;
+    private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="controller", type="string", length=255)
+     * @ORM\Column(name="path", type="string", length=255)
      */
-    private $controller;
+    private $path;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="defaults_controller", type="string", length=255)
+     */
+    private $defaultsController;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="defaults_format", type="string", length=255, nullable=true)
+     */
+    private $defaultsFormat;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="req_format", type="string", length=255, nullable=true)
+     */
+    private $reqFormat;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="sort", type="integer")
+     */
+    private $sort;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
 
     /**
@@ -47,48 +82,163 @@ class Route
     }
 
     /**
-     * Set pattern
+     * Set name
      *
-     * @param string $pattern
+     * @param string $name
      * @return Route
      */
-    public function setPattern($pattern)
+    public function setName($name)
     {
-        $this->pattern = $pattern;
+        $this->name = $name;
 
         return $this;
     }
 
     /**
-     * Get pattern
+     * Get name
      *
      * @return string 
      */
-    public function getPattern()
+    public function getName()
     {
-        return $this->pattern;
+        return $this->name;
     }
 
     /**
-     * Set controller
+     * Set path
      *
-     * @param string $controller
+     * @param string $path
      * @return Route
      */
-    public function setController($controller)
+    public function setPath($path)
     {
-        $this->controller = $controller;
+        $this->path = $path;
 
         return $this;
     }
 
     /**
-     * Get controller
+     * Get path
      *
      * @return string 
      */
-    public function getController()
+    public function getPath()
     {
-        return $this->controller;
+        return $this->path;
+    }
+
+    /**
+     * Set defaultsController
+     *
+     * @param string $defaultsController
+     * @return Route
+     */
+    public function setDefaultsController($defaultsController)
+    {
+        $this->defaultsController = $defaultsController;
+
+        return $this;
+    }
+
+    /**
+     * Get defaultsController
+     *
+     * @return string 
+     */
+    public function getDefaultsController()
+    {
+        return $this->defaultsController;
+    }
+
+    /**
+     * Set defaultsFormat
+     *
+     * @param string $defaultsFormat
+     * @return Route
+     */
+    public function setDefaultsFormat($defaultsFormat)
+    {
+        $this->defaultsFormat = $defaultsFormat;
+
+        return $this;
+    }
+
+    /**
+     * Get defaultsFormat
+     *
+     * @return string 
+     */
+    public function getDefaultsFormat()
+    {
+        return $this->defaultsFormat;
+    }
+
+    /**
+     * Set reqFormat
+     *
+     * @param string $reqFormat
+     * @return Route
+     */
+    public function setReqFormat($reqFormat)
+    {
+        $this->reqFormat = $reqFormat;
+
+        return $this;
+    }
+
+    /**
+     * Get reqFormat
+     *
+     * @return string 
+     */
+    public function getReqFormat()
+    {
+        return $this->reqFormat;
+    }
+
+    /**
+     * Set isActive
+     *
+     * @param boolean $isActive
+     * @return Route
+     */
+    public function setIsActive($isActive)
+    {
+        $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    /**
+     * Get isActive
+     *
+     * @return boolean 
+     */
+    public function getIsActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * Set sort
+     *
+     * @param boolean $sort
+     * @return Route
+     */
+    public function setSort($sort)
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
+     * Get sort
+     *
+     * @return boolean 
+     */
+    public function getSort()
+    {
+        return $this->sort;
     }
 }

@@ -5,6 +5,13 @@
     "keywords": ["routing", "doctrine", "symfony"],
     "description": "Dynamic database routing for Symfony2.",
     "homepage": "https://github.com/eschmar/doctrine-routing-bundle",
+    "authors": [
+        {
+            "name": "Marcel Eschmann",
+            "homepage": "https://github.com/eschmar",
+            "role": "Developer"
+        }
+    ],
     "autoload": {
         "psr-0": { "Eschmar": "src/" }
     },

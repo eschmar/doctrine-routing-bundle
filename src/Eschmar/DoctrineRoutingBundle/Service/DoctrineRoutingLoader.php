@@ -55,17 +55,28 @@ class DoctrineRoutingLoader extends Loader
         }
 
         $routes = new RouteCollection();
-        $doctrine_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findAll();
+        $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array('is_active' => 1), array('sort' => 'asc'));
 
-        foreach ($doctrine_routes as $r) {
-        	$temp = new Route($r->getPattern(), array(
-        		'_controller' => $r->getController()
+        foreach ($db_routes as $r) {
+
+        	$temp = new Route($r->getPath(), array(
+        		'_controller' => $r->getDefaultsController()
     		));
 
-    		$routes->add('tadaaa', $temp);
-        }
+    		if ($r->getDefaultsFormat() !== null) {
+    			$temp->addDefaults(array(
+    				'_format' => $r->getDefaultsFormat()
+				));
+    		}
 
-		// code here.
+    		if ($r->getReqFormat() !== null) {
+    			$temp->addRequirements(array(
+    				'_format' => $r->getReqFormat()
+				));
+        	}
+
+    		$routes->add($r->getName(), $temp);
+        }
 
 		$this->loaded = true;
 		return $routes;
