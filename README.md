@@ -27,7 +27,7 @@ Finally you have to update your doctrine schema for creating the database table.
 
 ## Usage
 
-Store your routes in the provided Route entity. After updating your routes you have to invoke
+Store your routes inside the provided Route entity. After updating your routes you have to invoke
 ```php
 php app/console cache:clear:routing prod
 ```
