@@ -33,4 +33,7 @@ php app/console cache:clear:routing prod
 ```
 for clearing the cache.
 
+## License
+
+MIT License
 
