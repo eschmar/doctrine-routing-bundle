@@ -2,7 +2,7 @@
 Dynamic database routing for Symfony2 without abandoning cacheing.
 
 ## Installation
-Composer ([Packagist](https://packagist.org/packages/eschmar/doctrine-routing-bundle)):
+Composer (<a href="https://packagist.org/packages/eschmar/doctrine-routing-bundle" target="_blank">Packagist</a>):
 ```json
 "require": {
 	"eschmar/doctrine-routing-bundle": "dev-master"
