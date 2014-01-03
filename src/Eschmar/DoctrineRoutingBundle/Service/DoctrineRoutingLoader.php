@@ -55,7 +55,7 @@ class DoctrineRoutingLoader extends Loader
         }
 
         $routes = new RouteCollection();
-        $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array('is_active' => 1), array('sort' => 'asc'));
+        $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array('isActive' => 1), array('sort' => 'asc'));
 
         foreach ($db_routes as $r) {
 
