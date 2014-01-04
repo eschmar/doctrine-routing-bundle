@@ -33,7 +33,6 @@ or inside a controller
 ```php
 $helper = $this->get('eschmar_doctrine_routing.helper');
 $this->clear('prod');
-
 ```
 for clearing the cache.
 
