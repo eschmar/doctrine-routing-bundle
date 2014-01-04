@@ -1,5 +1,5 @@
 # DoctrineRoutingBundle
-Dynamic database routing for Symfony2 without abandoning cacheing.
+With this bundle you can persist a subset of your routes inside a database using the provided entity `Route`. These routes will be cached and only updated if you clear your routing cache. This way you can manage your routes from an interface without abandoning cacheing. The bundle provides both command line and service triggering of clearing your cache.
 
 ## Installation
 Composer (<a href="https://packagist.org/packages/eschmar/doctrine-routing-bundle" target="_blank">Packagist</a>):
