@@ -7,4 +7,3 @@ services:
 
     eschmar_doctrine_routing.helper:
         class: "Eschmar\DoctrineRoutingBundle\Service\DoctrineRoutingHelper"
-        arguments: [ @doctrine.orm.entity_manager ]
