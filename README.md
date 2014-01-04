@@ -29,6 +29,12 @@ Store your routes inside the provided Route entity. After updating your routes y
 ```php
 php app/console cache:clear:routing prod
 ```
+or inside a controller
+```php
+$helper = $this->get('eschmar_doctrine_routing.helper');
+$this->clear('prod');
+
+```
 for clearing the cache.
 
 ## License
