@@ -50,9 +50,7 @@ class DoctrineRoutingHelper
         $finder = new Finder();
         foreach ($finder->files()->depth('== 0')->in('app/cache/'.$env) as $file) {
             if (preg_match('/^appDevUrl/', $file->getFilename()) == 1) {
-                try {
-                    unlink($file->getRealPath());
-                } catch (Exception $e) {
+                if (!@unlink($file->getRealPath())) {
                     $this->error_stack[] = '> Unable to delete '.$file->getFilename().'!';
                     $this->error_stack[] = '> Unexpected error. Check for write privileges.';
                     return false;
