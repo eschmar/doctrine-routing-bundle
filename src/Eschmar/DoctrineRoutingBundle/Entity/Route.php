@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="route")
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  */
 class Route
 {
@@ -38,23 +39,16 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="defaults_controller", type="string", length=255)
+     * @ORM\Column(name="host", type="string", length=255, nullable=true)
      */
-    private $defaultsController;
+    private $host;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="defaults_format", type="string", length=255, nullable=true)
+     * @ORM\Column(name="controller", type="string", length=255)
      */
-    private $defaultsFormat;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="req_format", type="string", length=255, nullable=true)
-     */
-    private $reqFormat;
+    private $controller;
 
     /**
      * @var integer
@@ -69,6 +63,41 @@ class Route
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @ORM\OneToMany(targetEntity="RouteConfig", mappedBy="route")
+     **/
+    private $config;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Route", mappedBy="parent")
+     **/
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Route", inversedBy="children")
+     **/
+    private $parent;
+
+    /**
+     * @var datetime
+     *
+     * @ORM\Column(name="modified", type="datetime")
+     */
+    private $modified;
+
+    public function __construct()
+    {
+        $this->children = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->touch();
+    }
+
+    /**
+     * @ORM\PreUpdate
+     */
+    public function touch() {
+        $this->setModified(new \DateTime(date('Y-m-d H:i:s')));
+    }
 
 
     /**
@@ -128,72 +157,72 @@ class Route
     }
 
     /**
-     * Set defaultsController
+     * Set host
      *
-     * @param string $defaultsController
+     * @param string $host
      * @return Route
      */
-    public function setDefaultsController($defaultsController)
+    public function setHost($host)
     {
-        $this->defaultsController = $defaultsController;
+        $this->host = $host;
 
         return $this;
     }
 
     /**
-     * Get defaultsController
+     * Get host
      *
      * @return string 
      */
-    public function getDefaultsController()
+    public function getHost()
     {
-        return $this->defaultsController;
+        return $this->host;
     }
 
     /**
-     * Set defaultsFormat
+     * Set controller
      *
-     * @param string $defaultsFormat
+     * @param string $controller
      * @return Route
      */
-    public function setDefaultsFormat($defaultsFormat)
+    public function setController($controller)
     {
-        $this->defaultsFormat = $defaultsFormat;
+        $this->controller = $controller;
 
         return $this;
     }
 
     /**
-     * Get defaultsFormat
+     * Get controller
      *
      * @return string 
      */
-    public function getDefaultsFormat()
+    public function getController()
     {
-        return $this->defaultsFormat;
+        return $this->controller;
     }
 
     /**
-     * Set reqFormat
+     * Set sort
      *
-     * @param string $reqFormat
+     * @param integer $sort
      * @return Route
      */
-    public function setReqFormat($reqFormat)
+    public function setSort($sort)
     {
-        $this->reqFormat = $reqFormat;
+        $this->sort = $sort;
 
         return $this;
     }
 
     /**
-     * Get reqFormat
+     * Get sort
      *
-     * @return string 
+     * @return integer 
      */
-    public function getReqFormat()
+    public function getSort()
     {
-        return $this->reqFormat;
+        return $this->sort;
     }
 
     /**
@@ -220,25 +249,114 @@ class Route
     }
 
     /**
-     * Set sort
+     * Set modified
      *
-     * @param boolean $sort
+     * @param \DateTime $modified
      * @return Route
      */
-    public function setSort($sort)
+    public function setModified($modified)
     {
-        $this->sort = $sort;
+        $this->modified = $modified;
 
         return $this;
     }
 
     /**
-     * Get sort
+     * Get modified
      *
-     * @return boolean 
+     * @return \DateTime 
      */
-    public function getSort()
+    public function getModified()
     {
-        return $this->sort;
+        return $this->modified;
+    }
+
+    /**
+     * Add config
+     *
+     * @param \Eschmar\DoctrineRoutingBundle\Entity\RouteConfig $config
+     * @return Route
+     */
+    public function addConfig(\Eschmar\DoctrineRoutingBundle\Entity\RouteConfig $config)
+    {
+        $this->config[] = $config;
+
+        return $this;
+    }
+
+    /**
+     * Remove config
+     *
+     * @param \Eschmar\DoctrineRoutingBundle\Entity\RouteConfig $config
+     */
+    public function removeConfig(\Eschmar\DoctrineRoutingBundle\Entity\RouteConfig $config)
+    {
+        $this->config->removeElement($config);
+    }
+
+    /**
+     * Get config
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getConfig()
+    {
+        return $this->config;
+    }
+
+    /**
+     * Add children
+     *
+     * @param \Eschmar\DoctrineRoutingBundle\Entity\Route $children
+     * @return Route
+     */
+    public function addChild(\Eschmar\DoctrineRoutingBundle\Entity\Route $children)
+    {
+        $this->children[] = $children;
+
+        return $this;
+    }
+
+    /**
+     * Remove children
+     *
+     * @param \Eschmar\DoctrineRoutingBundle\Entity\Route $children
+     */
+    public function removeChild(\Eschmar\DoctrineRoutingBundle\Entity\Route $children)
+    {
+        $this->children->removeElement($children);
+    }
+
+    /**
+     * Get children
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getChildren()
+    {
+        return $this->children;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \Eschmar\DoctrineRoutingBundle\Entity\Route $parent
+     * @return Route
+     */
+    public function setParent(\Eschmar\DoctrineRoutingBundle\Entity\Route $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \Eschmar\DoctrineRoutingBundle\Entity\Route 
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }

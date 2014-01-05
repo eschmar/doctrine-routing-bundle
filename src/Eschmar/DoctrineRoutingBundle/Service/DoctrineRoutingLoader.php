@@ -60,26 +60,36 @@ class DoctrineRoutingLoader extends Loader
         $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array('isActive' => 1), array('sort' => 'asc'));
         foreach ($db_routes as $r) {
 
-            // Pattern
-            $temp = new Route($r->getPath(), array(
-                '_controller' => $r->getDefaultsController()
-            ));
+            // Retrieve route configuration
+            $defaults = array('_controller' => $r->getController());
+            $requirements = array();
+            $options = array();
+            $host = $r->getHost() === null ? '' : $r->getHost();
+            
+            // TODO:
+            /*$schemes = array();
+            $methods = array();
+            $condition = null;*/
 
-            // Defaults
-            if ($r->getDefaultsFormat() !== null) {
-                $temp->addDefaults(array(
-                    '_format' => $r->getDefaultsFormat()
-                ));
+            foreach ($r->getConfig() as $config) {
+                switch ($config->getType()) {
+                    case 0:
+                        $defaults[$config->getName()] = $config->getValue();
+                        break;
+                    case 1:
+                        $requirements[$config->getName()] = $config->getValue();
+                        break;
+                    case 2:
+                        $options[$config->getName()] = $config->getValue();
+                        break;
+                    default:
+                        // invalid type
+                        break;
+                }
             }
 
-            // Requirements
-            if ($r->getReqFormat() !== null) {
-                $temp->addRequirements(array(
-                    '_format' => $r->getReqFormat()
-                ));
-            }
-
-            $routes->add($r->getName(), $temp);
+            // Add route to collection
+            $routes->add($r->getName(), new Route($r->getPath(), $defaults, $requirements, $options, $host));
         }
 
         $this->loaded = true;
