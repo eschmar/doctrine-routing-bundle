@@ -29,7 +29,7 @@ class RouteConfig
     /**
      * @var smallint
      *
-     * @ORM\Column(name="type", type="smallint")
+     * @ORM\Column(name="type", type="smallint", options={"comment" = "0=defaults,1=req,2=options"})
      */
     private $type;
 
