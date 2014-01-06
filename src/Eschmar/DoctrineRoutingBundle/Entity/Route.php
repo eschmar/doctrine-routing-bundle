@@ -58,13 +58,6 @@ class Route
     private $sort;
 
     /**
-     * @var boolean
-     *
-     * @ORM\Column(name="is_active", type="boolean")
-     */
-    private $isActive;
-
-    /**
      * @ORM\OneToMany(targetEntity="RouteConfig", mappedBy="route")
      **/
     private $config;
@@ -85,6 +78,13 @@ class Route
      * @ORM\Column(name="modified", type="datetime")
      */
     private $modified;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
 
     public function __construct()
     {
