@@ -32,6 +32,13 @@ class Route
     /**
      * @var string
      *
+     * @ORM\Column(name="icon", type="string", length=50)
+     */
+    private $icon;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="path", type="string", length=255)
      */
     private $path;
@@ -78,6 +85,13 @@ class Route
      * @ORM\Column(name="modified", type="datetime")
      */
     private $modified;
+
+    /**
+     * @var boolean
+     *
+     * @ORM\Column(name="is_category", type="boolean")
+     */
+    private $isCategory;
 
     /**
      * @var boolean
@@ -358,5 +372,51 @@ class Route
     public function getParent()
     {
         return $this->parent;
+    }
+
+    /**
+     * Set icon
+     *
+     * @param string $icon
+     * @return Route
+     */
+    public function setIcon($icon)
+    {
+        $this->icon = $icon;
+
+        return $this;
+    }
+
+    /**
+     * Get icon
+     *
+     * @return string 
+     */
+    public function getIcon()
+    {
+        return $this->icon;
+    }
+
+    /**
+     * Set isCategory
+     *
+     * @param boolean $isCategory
+     * @return Route
+     */
+    public function setIsCategory($isCategory)
+    {
+        $this->isCategory = $isCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get isCategory
+     *
+     * @return boolean 
+     */
+    public function getIsCategory()
+    {
+        return $this->isCategory;
     }
 }

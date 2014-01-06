@@ -57,7 +57,10 @@ class DoctrineRoutingLoader extends Loader
         $routes = new RouteCollection();
 
         // Retrieve each active route from the database and add it to the collection
-        $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array('isActive' => 1), array('sort' => 'asc'));
+        $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array(
+            'isActive' => 1,
+            'isCategory' => 0
+        ), array('sort' => 'asc'));
         foreach ($db_routes as $r) {
 
             // Retrieve route configuration
