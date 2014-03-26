@@ -32,6 +32,13 @@ class Route
     /**
      * @var string
      *
+     * @ORM\Column(name="title", type="string", length=100)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="icon", type="string", length=50)
      */
     private $icon;
@@ -418,5 +425,28 @@ class Route
     public function getIsCategory()
     {
         return $this->isCategory;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return Route
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }
