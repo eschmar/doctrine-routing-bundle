@@ -39,13 +39,6 @@ class Route
     /**
      * @var string
      *
-     * @ORM\Column(name="icon", type="string", length=50)
-     */
-    private $icon;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="path", type="string", length=255)
      */
     private $path;
@@ -65,6 +58,20 @@ class Route
     private $controller;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="role", type="string", length=100)
+     */
+    private $role;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="icon", type="string", length=50)
+     */
+    private $icon;
+
+    /**
      * @var integer
      *
      * @ORM\Column(name="sort", type="integer")
@@ -78,13 +85,15 @@ class Route
 
     /**
      * @ORM\OneToMany(targetEntity="Route", mappedBy="parent")
+     * @ORM\OrderBy({"sort" = "ASC"})
      **/
-    private $children;
+    protected $children;
 
     /**
      * @ORM\ManyToOne(targetEntity="Route", inversedBy="children")
+     * @ORM\JoinColumn(name="parent", referencedColumnName="id")
      **/
-    private $parent;
+    protected $parent;
 
     /**
      * @var datetime
@@ -119,7 +128,6 @@ class Route
     public function touch() {
         $this->setModified(new \DateTime(date('Y-m-d H:i:s')));
     }
-
 
     /**
      * Get id
@@ -448,5 +456,28 @@ class Route
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set role
+     *
+     * @param string $role
+     * @return Route
+     */
+    public function setRole($role)
+    {
+        $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string 
+     */
+    public function getRole()
+    {
+        return $this->role;
     }
 }
