@@ -13,8 +13,9 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Eschmar": "src/" }
+        "psr-0": { "Eschmar\\DoctrineRoutingBundle": "" }
     },
+    "target-dir": "Eschmar/DoctrineRoutingBundle",
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "~2.4",
