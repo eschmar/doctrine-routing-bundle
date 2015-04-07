@@ -19,16 +19,17 @@ class ClearRoutingCacheCommand extends Command
     protected function configure()
     {
         $this->setName('cache:clear:routing')
-            ->setDescription('Clear Routing Cache')
-            ->addArgument('env', InputArgument::OPTIONAL, '[dev,prod,test]');
+            ->setDescription('Clear Routing Cache');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('');
-        $helper = $this->getApplication()->getKernel()->getContainer()->get('eschmar_doctrine_routing.helper');
+        $kernel = $this->getApplication()->getKernel();
+        $helper = $kernel->getContainer()->get('eschmar_doctrine_routing.helper');
+        $env = $kernel->getEnvironment();
 
-        if (!$helper->clear($input->getArgument('env'))) {
+        if (!$helper->clear($env)) {
             foreach ($helper->error_stack as $error) {
                 $output->writeln('<error>'.$error.'</error>');
             }
