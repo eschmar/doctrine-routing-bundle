@@ -6,4 +6,5 @@ services:
             - { name: routing.loader }
 
     eschmar_doctrine_routing.helper:
+        arguments: [ %kernel.environment% ]
         class: "Eschmar\DoctrineRoutingBundle\Service\DoctrineRoutingHelper"

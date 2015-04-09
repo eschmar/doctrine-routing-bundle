@@ -41,5 +41,3 @@ class ClearRoutingCacheCommand extends Command
         }
     }
 }  // END class ClearRoutingCacheCommand extends Command
-
-?>

@@ -7,12 +7,10 @@ use Symfony\Component\Finder\Finder;
 /**
  * Helper class
  *
- * @package default
  * @author Marcel Eschmann
  **/
 class DoctrineRoutingHelper
 {
-
     /**
      * Error messages log
      **/
@@ -24,18 +22,30 @@ class DoctrineRoutingHelper
     public $info_stack = array();
 
     /**
+     * Current environment
+     **/
+    private $env;
+
+    /**
+     * Valid environments
+     **/
+    private $valid_envs = ["prod", "dev", "test"];
+
+    public function __construct($env) {
+        $this->env = $env;
+    }
+
+    /**
      * Clears the routing cache
      *
      * @return boolean
      * @author Marcel Eschmann
      **/
-    public function clear($env = 'dev')
+    public function clear($env = null)
     {
-
         // Validate input
-        $env = $env === null ? 'dev' : $env;
-
-        if ($env !== 'dev' && $env !== 'prod' && $env !== 'test') {
+        $env = $env ? $env : $this->env;
+        if (!in_array($env, $this->valid_envs)) {
             $this->error_stack[] = '> Invalid environment chosen. Please choose between [dev, prod, test].';
             return false;
         }
@@ -62,5 +72,3 @@ class DoctrineRoutingHelper
     }
     
 } // END class DoctrineRoutingHelper
-
-?>

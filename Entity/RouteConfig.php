@@ -47,7 +47,6 @@ class RouteConfig
      */
     private $value;
 
-
     /**
      * Get id
      *
