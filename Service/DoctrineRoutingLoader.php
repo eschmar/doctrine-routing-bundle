@@ -9,7 +9,6 @@ use Symfony\Component\Routing\RouteCollection;
 /**
  * Custom loader class for storing dynamic routes inside a database
  *
- * @package default
  * @author Marcel Eschmann
  **/
 class DoctrineRoutingLoader extends Loader
@@ -24,8 +23,7 @@ class DoctrineRoutingLoader extends Loader
      **/
     private $loaded = false;
 
-    function __construct($entityManager) {
-        //parent::__construct();
+    public function __construct($entityManager) {
         $this->em = $entityManager;
     }
 
@@ -53,14 +51,13 @@ class DoctrineRoutingLoader extends Loader
             throw new \RuntimeException('DoctrineRoutingLoader was already added once!');
         }
 
-           // Create a new route collection
+        // Retrieve each active route from the database
         $routes = new RouteCollection();
-
-        // Retrieve each active route from the database and add it to the collection
         $db_routes = $this->em->getRepository('EschmarDoctrineRoutingBundle:Route')->findBy(array(
             'isActive' => 1,
             'isCategory' => 0
         ), array('sort' => 'asc'));
+
         foreach ($db_routes as $r) {
 
             // Retrieve route configuration
@@ -100,6 +97,3 @@ class DoctrineRoutingLoader extends Loader
     }
 
 } // END class DoctrineRoutingLoader
-
-
-?>
